@@ -6,13 +6,12 @@ import akka.http.scaladsl.model._
 import akka.stream.ActorMaterializer
 import akka.stream.scaladsl.{Flow, Sink, Source}
 
-import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 
 class AkkaConnectionBackend  private[AkkaConnectionBackend] (
   uri: Uri,
   flow: Flow[HttpRequest, HttpResponse, Future[OutgoingConnection]],
-  headers: immutable.Seq[HttpHeader]
+  headers: Seq[HttpHeader]
 )(override implicit val as: ActorSystem, override implicit val mat: ActorMaterializer)
    extends AkkaBackend {
 
@@ -55,7 +54,7 @@ object AkkaConnectionBackend {
 
   def apply(uri: Uri,
              flow: Flow[HttpRequest, HttpResponse, Future[OutgoingConnection]],
-             headers: immutable.Seq[HttpHeader] = Nil
+             headers: Seq[HttpHeader] = Nil
            )( implicit  as: ActorSystem,  mat: ActorMaterializer): AkkaConnectionBackend =
     new AkkaConnectionBackend(uri, flow, headers)
 

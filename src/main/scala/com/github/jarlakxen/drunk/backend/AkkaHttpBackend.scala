@@ -16,7 +16,6 @@
 
 package com.github.jarlakxen.drunk.backend
 
-import scala.collection.immutable
 import scala.concurrent.{ExecutionContext, Future}
 import akka.actor.ActorSystem
 import akka.http.scaladsl.{Http, HttpExt}
@@ -25,7 +24,7 @@ import akka.stream.ActorMaterializer
 
 class AkkaHttpBackend private[AkkaHttpBackend] (
   uri: Uri,
-  headers: immutable.Seq[HttpHeader],
+  headers: Seq[HttpHeader],
   httpExt: HttpExt
 )(override implicit val as: ActorSystem, override implicit val mat: ActorMaterializer)
     extends AkkaBackend {
@@ -65,7 +64,7 @@ object AkkaHttpBackend {
 
   def apply(
     uri: Uri,
-    headers: immutable.Seq[HttpHeader] = Nil,
+    headers: Seq[HttpHeader] = Nil,
     httpExt: Option[HttpExt] = None
   )(implicit as: ActorSystem, mat: ActorMaterializer): AkkaHttpBackend = {
 

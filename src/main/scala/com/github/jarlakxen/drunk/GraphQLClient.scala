@@ -33,8 +33,6 @@ import sangria.introspection._
 import sangria.marshalling.circe._
 import sangria.parser.{QueryParser, SyntaxError}
 
-import scala.collection.immutable
-
 class GraphQLClient private[GraphQLClient] (options: ClientOptions, backend: AkkaBackend) {
   import GraphQLClient._
 
@@ -177,7 +175,7 @@ object GraphQLClient {
     uri: String,
     options: ConnectionOptions = ConnectionOptions.Default,
     clientOptions: ClientOptions = ClientOptions.Default,
-    headers: immutable.Seq[HttpHeader] = Nil
+    headers: Seq[HttpHeader] = Nil
   ): GraphQLClient = {
     implicit val as: ActorSystem = ActorSystem("GraphQLClient")
     implicit val mat: ActorMaterializer = ActorMaterializer()
@@ -189,7 +187,7 @@ object GraphQLClient {
     uri: Uri,
     flow: Flow[HttpRequest, HttpResponse, Future[OutgoingConnection]],
     clientOptions: ClientOptions,
-    headers: immutable.Seq[HttpHeader]
+    headers: Seq[HttpHeader]
   )(implicit as: ActorSystem, mat: ActorMaterializer): GraphQLClient =
     new GraphQLClient(clientOptions, AkkaConnectionBackend(uri, flow, headers))
 
